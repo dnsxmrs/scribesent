@@ -23,35 +23,35 @@
     - Implement data validation schemas
     - _Requirements: 1.1, 2.1, 2.2, 2.3_
 
-- [ ] 3. Build YouTube Data API v3 integration service
+- [ ] 3. Build RSS feed monitoring integration service
 
-  - [ ] 3.1 Implement YouTube API client and authentication
+  - [ ] 3.1 Implement RSS feed client and monitoring
 
-    - Set up YouTube Data API v3 client with API key
-    - Create rate limiting and quota management utilities
-    - Implement exponential backoff for API errors
+    - Set up axios and xml2js packages for RSS feed processing
+    - Create RSS feed fetching utilities for YouTube channels
+    - Implement exponential backoff for network errors
     - _Requirements: 2.1, 4.1, 4.2, 9.1, 9.2, 9.3_
 
   - [ ] 3.2 Build channel validation and metadata extraction
 
     - Implement channel URL validation and parsing
-    - Create function to extract uploads playlist ID from channel
-    - Add channel metadata retrieval (name, avatar, etc.)
+    - Create function to extract channel_id from RSS or @username channels
+    - Add channel metadata retrieval using RSS feeds
     - Write unit tests for channel validation logic
     - _Requirements: 2.1, 2.2_
 
   - [ ] 3.3 Implement new video discovery functionality
-    - Create playlist monitoring service using playlistItems.list
-    - Implement new video detection by comparing publish dates
+    - Create RSS feed monitoring service for channel updates
+    - Implement new video detection by comparing against last processed video ID
     - Add duplicate video detection to prevent reprocessing
     - Write unit tests for video discovery logic
     - _Requirements: 4.1, 4.2, 4.6_
 
 - [ ] 4. Create transcript extraction service
 
-  - [ ] 4.1 Implement youtube-transcript-api integration
+  - [ ] 4.1 Implement youtube-transcript npm package integration
 
-    - Set up youtube-transcript-api client
+    - Set up youtube-transcript npm package client
     - Create transcript extraction function with error handling
     - Implement multi-language support detection
     - Add transcript availability checking
@@ -104,8 +104,8 @@
 
   - [ ] 7.1 Create channel monitoring service
 
-    - Build background service that polls every 5 minutes
-    - Implement channel polling using YouTube Data API v3
+    - Build background service that polls RSS feeds every 5 minutes
+    - Implement channel polling using RSS feed monitoring
     - Create new video detection and processing queue
     - Add monitoring service health checks and logging
     - _Requirements: 4.1, 4.2, 4.4, 4.6, 9.4_
@@ -209,8 +209,8 @@
 
   - [ ] 11.1 Create unit tests for core functionality
 
-    - Write tests for YouTube API integration
-    - Create tests for transcript processing
+    - Write tests for RSS feed monitoring integration
+    - Create tests for transcript processing with youtube-transcript npm package
     - Build tests for AI summarization
     - Add tests for email service
     - _Requirements: All requirements_
