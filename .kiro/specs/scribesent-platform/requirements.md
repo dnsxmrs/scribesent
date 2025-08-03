@@ -24,7 +24,7 @@ Scribesent is an open-source platform that automatically monitors YouTube channe
 
 #### Acceptance Criteria
 
-1. WHEN a user provides a YouTube channel URL THEN the system SHALL validate the channel exists using YouTube Data API
+1. WHEN a user provides a YouTube channel URL THEN the system SHALL validate the channel exists using YouTube RSS feeds
 2. WHEN a channel is validated THEN the system SHALL allow the user to configure summary preferences
 3. WHEN configuring preferences THEN the system SHALL offer summary formats: Standard, Detailed, Executive
 4. WHEN configuring preferences THEN the system SHALL offer summary styles: Professional (default), Conversational, Academic, Bullet Points
@@ -50,13 +50,14 @@ Scribesent is an open-source platform that automatically monitors YouTube channe
 
 #### Acceptance Criteria
 
-1. WHEN the background service runs every 15 minutes THEN the system SHALL poll all tracked channels via YouTube Data API
+1. WHEN the background service runs every 5 minutes THEN the system SHALL poll all tracked channels via YouTube RSS feeds (https://www.youtube.com/feeds/videos.xml?channel_id=CHANNEL_ID)
 2. WHEN new videos are detected THEN the system SHALL store video metadata in the database
-3. WHEN a new video is found THEN the system SHALL attempt to retrieve the transcript using youtube-transcript-api
+3. WHEN a new video is found THEN the system SHALL attempt to retrieve the transcript using youtube-transcript npm package
 4. IF a transcript is available THEN the system SHALL store it in the database
 5. IF a transcript is unavailable THEN the system SHALL mark the video as transcript unavailable
 6. WHEN processing videos THEN the system SHALL handle videos up to 4 hours in length
 7. WHEN processing videos THEN the system SHALL support 10+ languages automatically
+8. WHEN monitoring RSS feeds THEN the system SHALL use Node.js with axios, xml2js, and fs packages for persistent storage
 
 ### Requirement 5
 

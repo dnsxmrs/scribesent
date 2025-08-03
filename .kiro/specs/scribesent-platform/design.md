@@ -28,8 +28,8 @@ graph TB
     end
     
     subgraph "External Services"
-        YT[YouTube Data API v3]
-        TRANS[youtube-transcript-api]
+        RSS[YouTube RSS Feeds]
+        TRANS[youtube-transcript npm package]
         AI[Gemini 2.5 Flash API]
         EMAIL[Brevo Email API]
     end
@@ -47,12 +47,12 @@ graph TB
     DB --> RLS
     
     %% Channel Management Flow
-    API --> YT
-    YT --> |Channel Info & Playlist ID| API
+    API --> RSS
+    RSS --> |Channel Info & Video List| API
     
     %% Background Monitoring Flow (Every 5 minutes)
-    MONITOR --> YT
-    YT --> |New Videos| MONITOR
+    MONITOR --> RSS
+    RSS --> |New Videos| MONITOR
     MONITOR --> DB
     MONITOR --> PROCESSOR
     
@@ -71,17 +71,17 @@ graph TB
 
 #### User Management Flow
 1. **Authentication**: Google OAuth via Supabase Auth
-2. **Channel Addition**: User provides YouTube channel URL → API validates via YouTube Data API v3 → Extracts uploads playlist ID → Stores in database
+2. **Channel Addition**: User provides YouTube channel URL → API validates via YouTube RSS feed → Extracts channel metadata → Stores in database
 3. **Channel Configuration**: User sets summary preferences (format, style, email recipient)
 
 #### Background Monitoring Flow
-1. **Continuous Monitoring**: Background service polls YouTube Data API v3 every 5 minutes
-2. **Channel Monitoring**: For each active channel, query `playlistItems.list` using stored uploads playlist ID
+1. **Continuous Monitoring**: Background service polls YouTube RSS feeds every 5 minutes
+2. **Channel Monitoring**: For each active channel, query RSS feed using `https://www.youtube.com/feeds/videos.xml?channel_id=CHANNEL_ID`
 3. **New Video Detection**: Compare video publish dates against `last_checked_at` timestamp
 4. **Video Processing Queue**: New videos are queued for processing
 
 #### Content Processing Pipeline
-1. **Transcript Extraction**: Use youtube-transcript-api to get video transcript
+1. **Transcript Extraction**: Use youtube-transcript npm package to get video transcript
 2. **AI Summarization**: Send transcript to Gemini 2.5 Flash with user's format/style preferences
 3. **Email Generation**: Format summary into HTML email template
 4. **Email Delivery**: Send via Brevo API to user's configured email address
@@ -94,17 +94,17 @@ graph TB
 
 ### Channel Monitoring Approach
 
-The system uses YouTube Data API v3 for efficient channel monitoring:
+The system uses YouTube RSS feeds for efficient channel monitoring:
 
-1. **Channel Registration**: When a user adds a channel, use `channels.list` to get the channel's uploads playlist ID
-2. **Continuous Polling**: Background service polls every 5 minutes using `playlistItems.list` to check for new videos in each channel's uploads playlist
-3. **New Video Detection**: Compare video publish dates against the last check timestamp stored in the database
-4. **Quota Optimization**: Playlist monitoring uses only 1 quota unit per channel vs 100 units for search-based monitoring
-5. **Service Architecture**: Self-contained monitoring service that runs independently of web requests
+1. **Channel Registration**: When a user adds a channel, extract channel_id from the URL or use oEmbed endpoint
+2. **Continuous Polling**: Background service polls every 5 minutes using RSS feeds at `https://www.youtube.com/feeds/videos.xml?channel_id=CHANNEL_ID`
+3. **New Video Detection**: Parse RSS XML and compare video publish dates against the last check timestamp stored in the database
+4. **No Quota Limitations**: RSS feeds are free and don't have quota restrictions unlike YouTube Data API
+5. **Service Architecture**: Self-contained monitoring service that runs independently of web requests using Node.js with axios, xml2js, and fs packages for persistent storage
 
 ### Background Monitoring Service
 
-The monitoring service runs as a separate process that continuously polls YouTube Data API v3:
+The monitoring service runs as a separate process that continuously polls YouTube RSS feeds:
 
 ```typescript
 interface MonitoringService {
@@ -146,9 +146,9 @@ class ChannelMonitor implements MonitoringService {
 ```mermaid
 flowchart TD
     A[User adds YouTube channel] --> B[Validate channel URL]
-    B --> C[YouTube Data API: channels.list]
-    C --> D[Extract uploads playlist ID]
-    D --> E[Store channel + playlist ID in DB]
+    B --> C[YouTube RSS Feed: channel validation]
+    C --> D[Extract channel metadata]
+    D --> E[Store channel + metadata in DB]
     E --> F[User configures preferences]
     F --> G{Test latest video?}
     G -->|Yes| H[Get latest video from playlist]
@@ -159,7 +159,7 @@ flowchart TD
     
     %% Background monitoring loop
     BG1[Monitor Service: Every 5 minutes] --> BG2[Get all active channels]
-    BG2 --> BG3[For each channel: playlistItems.list]
+    BG2 --> BG3[For each channel: RSS feed poll]
     BG3 --> BG4[Filter videos newer than last_checked_at]
     BG4 --> BG5{New videos found?}
     BG5 -->|No| BG6[Update last_checked_at]
@@ -239,30 +239,27 @@ flowchart TD
 
 ### External Service Integrations
 
-#### YouTube Data API v3 Integration
+#### YouTube RSS Feed Integration
 ```typescript
 interface YouTubeService {
   validateChannel(channelUrl: string): Promise<ChannelInfo>
-  getChannelUploadsPlaylistId(channelId: string): Promise<string>
-  getNewVideosFromPlaylist(playlistId: string, since: Date): Promise<VideoInfo[]>
-  searchChannelVideos(channelId: string, publishedAfter: Date): Promise<VideoInfo[]>
+  getChannelIdFromUrl(channelUrl: string): Promise<string>
+  getNewVideosFromRSS(channelId: string, since: Date): Promise<VideoInfo[]>
   getVideoDetails(videoId: string): Promise<VideoDetails>
 }
 ```
 
 **Channel Monitoring Strategy**:
-- Use `channels.list` method to get channel details and uploads playlist ID (1 unit per request)
-- Use `playlistItems.list` to get recent videos from uploads playlist (1 unit per request)
-- Alternative: Use `search.list` with `channelId` and `publishedAfter` filters (100 units per request)
-- Prefer playlist approach for better quota efficiency
+- Use RSS feeds at `https://www.youtube.com/feeds/videos.xml?channel_id=CHANNEL_ID` to get recent videos
+- Parse RSS XML using xml2js package to extract video metadata
+- No rate limiting or quota restrictions unlike YouTube Data API
+- Fallback to oEmbed endpoint for channel_id extraction from @username channels
 
-**Rate Limiting Strategy**:
-- Default quota: 10,000 units/day
-- Channel validation: 1 unit per request
-- Playlist items listing: 1 unit per request (preferred method)
-- Video search: 100 units per request (fallback method)
-- Implement exponential backoff for rate limit errors
-- Cache channel metadata and playlist IDs to reduce API calls
+**Error Handling Strategy**:
+- Handle RSS feed unavailability gracefully
+- Implement exponential backoff for network errors
+- Cache channel metadata to reduce RSS requests
+- Store last video ID to avoid duplicate processing
 
 #### Transcript Service Integration
 ```typescript
@@ -272,11 +269,18 @@ interface TranscriptService {
 }
 ```
 
+**Implementation Details**:
+- Use youtube-transcript npm package for Node.js transcript extraction
+- Handle multiple transcript languages (auto-generated and manual)
+- Graceful fallback when transcripts are unavailable
+- Support for subtitle formats and timing information
+
 **Error Handling**:
-- Handle videos without transcripts gracefully
+- Handle videos without transcripts gracefully with fallback mechanism
 - Support multiple languages automatically
 - Implement retry logic for temporary failures
 - Store transcript unavailable status to avoid repeated attempts
+- Use realistic fallback transcripts for testing when transcripts are unavailable
 
 #### Gemini AI Integration
 ```typescript
@@ -349,7 +353,6 @@ CREATE TABLE channels (
   youtube_channel_id VARCHAR(255) NOT NULL,
   channel_name VARCHAR(255) NOT NULL,
   channel_url TEXT NOT NULL,
-  uploads_playlist_id VARCHAR(255) NOT NULL,
   avatar_url TEXT,
   summary_format VARCHAR(50) DEFAULT 'standard',
   summary_style VARCHAR(50) DEFAULT 'professional',
@@ -357,6 +360,7 @@ CREATE TABLE channels (
   is_active BOOLEAN DEFAULT true,
   last_checked_at TIMESTAMP WITH TIME ZONE,
   last_video_date TIMESTAMP WITH TIME ZONE,
+  last_video_id VARCHAR(255), -- Store last processed video ID for RSS monitoring
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   UNIQUE(user_id, youtube_channel_id)
@@ -374,8 +378,8 @@ CREATE TABLE videos (
   thumbnail_url TEXT,
   duration INTEGER, -- in seconds
   published_at TIMESTAMP WITH TIME ZONE NOT NULL,
-  transcript_available BOOLEAN DEFAULT false,
-  transcript_text TEXT,
+  transcript_text TEXT, -- Raw transcript from youtube-transcript npm package
+  transcript_status VARCHAR(50) DEFAULT 'pending', -- pending, completed, failed, unavailable
   transcript_language VARCHAR(10),
   summary_text TEXT,
   summary_format VARCHAR(50),
@@ -425,7 +429,6 @@ interface Channel {
   youtubeChannelId: string
   channelName: string
   channelUrl: string
-  uploadsPlaylistId: string
   avatarUrl?: string
   summaryFormat: 'standard' | 'detailed' | 'executive'
   summaryStyle: 'professional' | 'conversational' | 'academic' | 'bullet-points'
@@ -433,6 +436,7 @@ interface Channel {
   isActive: boolean
   lastCheckedAt?: Date
   lastVideoDate?: Date
+  lastVideoId?: string // Store last processed video ID for RSS monitoring
   createdAt: Date
   updatedAt: Date
 }
@@ -446,8 +450,8 @@ interface Video {
   thumbnailUrl?: string
   duration?: number
   publishedAt: Date
-  transcriptAvailable: boolean
-  transcriptText?: string
+  transcriptText?: string // Raw transcript from youtube-transcript npm package
+  transcriptStatus: 'pending' | 'completed' | 'failed' | 'unavailable'
   transcriptLanguage?: string
   summaryText?: string
   summaryFormat?: string
