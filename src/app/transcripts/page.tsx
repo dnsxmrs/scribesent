@@ -2,18 +2,16 @@
 
 import React from 'react';
 import DashboardLayout from '@/components/dashboard-layout';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
   Youtube, 
-  ArrowLeft,
   ExternalLink,
   Calendar,
   Clock,
   User,
-  Download,
-  Copy
+  Download
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -21,7 +19,7 @@ import Link from 'next/link';
 const mockTranscripts = [
   {
     id: '1',
-    videoTitle: 'AI Revolution: What\'s Next in 2025',
+    videoTitle: 'AI Revolution: What&apos;s Next in 2025',
     channelName: 'TechCrunch',
     channelUrl: 'https://youtube.com/@TechCrunch',
     videoUrl: 'https://youtube.com/watch?v=example1',
@@ -135,7 +133,7 @@ const TranscriptsPage = () => {
                 <label className="text-sm font-bold text-black mr-2">SORT BY:</label>
                 <select 
                   value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value as any)}
+                  onChange={(e) => setSortBy(e.target.value as 'newest' | 'oldest' | 'channel')}
                   className="border-2 border-black font-bold px-3 py-1 bg-white"
                 >
                   <option value="newest">Newest First</option>
@@ -147,7 +145,7 @@ const TranscriptsPage = () => {
                 <label className="text-sm font-bold text-black mr-2">FILTER BY FORMAT:</label>
                 <select 
                   value={filterBy}
-                  onChange={(e) => setFilterBy(e.target.value as any)}
+                  onChange={(e) => setFilterBy(e.target.value as 'all' | 'standard' | 'detailed' | 'key-insights')}
                   className="border-2 border-black font-bold px-3 py-1 bg-white"
                 >
                   <option value="all">All Formats</option>

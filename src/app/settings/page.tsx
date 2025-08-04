@@ -81,6 +81,7 @@ const SettingsPage = () => {
       setShowSuccessAlert(true);
       setTimeout(() => setShowSuccessAlert(false), 3000);
     } catch (error) {
+      console.log('Error saving settings:', error);
       alert('Failed to save changes. Please try again.');
     } finally {
       setIsLoading(false);

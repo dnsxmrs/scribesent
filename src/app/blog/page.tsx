@@ -131,7 +131,7 @@ export default function BlogPage() {
               </p>
               <h2 className="text-2xl font-bold text-foreground mb-2">Community and Open Source</h2>
               <p>
-                ScribeSent is more than just a tool—it's a community-driven project. We believe in the power of open source and welcome contributions from developers, designers, and users alike. Whether you want to add new features, improve documentation, or simply share your feedback, your input is valued and appreciated.
+                ScribeSent is more than just a tool—it&apos;s a community-driven project. We believe in the power of open source and welcome contributions from developers, designers, and users alike. Whether you want to add new features, improve documentation, or simply share your feedback, your input is valued and appreciated.
               </p>
               <p>
                 Our vision is to create a platform that empowers users to take control of their digital content consumption. By making ScribeSent free and open to all, we hope to foster a community of learners, creators, and enthusiasts who are passionate about making the most of their time online.

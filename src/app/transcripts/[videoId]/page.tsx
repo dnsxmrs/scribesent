@@ -5,10 +5,8 @@ import { useParams } from 'next/navigation';
 import DashboardLayout from '@/components/dashboard-layout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { 
-  Youtube, 
   ExternalLink,
   Calendar,
   Clock,
@@ -17,7 +15,6 @@ import {
   FileText,
   Sparkles
 } from 'lucide-react';
-import Link from 'next/link';
 
 interface VideoData {
   id: string;
@@ -43,20 +40,21 @@ const TranscriptViewerPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [videoData, setVideoData] = useState<VideoData | null>(null);
 
-  // Mock video data
-  const mockVideoData: VideoData = {
-    id: videoId,
-    title: 'AI Revolution: What\'s Next in 2025',
-    channelName: 'TechCrunch',
-    channelUrl: 'https://youtube.com/@TechCrunch',
-    videoUrl: 'https://youtube.com/watch?v=example1',
-    duration: '14:32',
-    publishedDate: '2025-01-02',
-    processedDate: '2025-01-02',
-    summaryFormat: 'Standard',
-    thumbnailUrl: 'https://img.youtube.com/vi/example1/maxresdefault.jpg',
-    viewCount: '1.2M',
-    likeCount: '45K',
+  useEffect(() => {
+    // Mock video data
+    const mockVideoData: VideoData = {
+      id: videoId,
+      title: 'AI Revolution: What&apos;s Next in 2025',
+      channelName: 'TechCrunch',
+      channelUrl: 'https://youtube.com/@TechCrunch',
+      videoUrl: 'https://youtube.com/watch?v=example1',
+      duration: '14:32',
+      publishedDate: '2025-01-02',
+      processedDate: '2025-01-02',
+      summaryFormat: 'Standard',
+      thumbnailUrl: 'https://img.youtube.com/vi/example1/maxresdefault.jpg',
+      viewCount: '1.2M',
+      likeCount: '45K',
     transcript: `[00:00] Welcome back to TechCrunch! Today we're diving deep into the AI revolution and what we can expect in 2025.
 
 [00:15] The landscape of artificial intelligence has changed dramatically over the past year. We've seen breakthrough developments in large language models, with new architectures that are more efficient and capable than ever before.
@@ -190,9 +188,8 @@ This TechCrunch video provides a comprehensive overview of the current AI landsc
 
 ### Future Outlook
 The video emphasizes that AI will continue to be transformative across industries, with the key being responsible development and broad distribution of benefits. Success will depend on balancing innovation with safety, ethics, and societal considerations.`
-  };
+    };
 
-  useEffect(() => {
     // Simulate API call to fetch video data
     const fetchVideoData = async () => {
       setIsLoading(true);

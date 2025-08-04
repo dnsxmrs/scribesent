@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import DashboardLayout from '@/components/dashboard-layout';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
@@ -38,7 +38,7 @@ const mockChannels = [
     name: 'TechCrunch',
     channelUrl: 'https://youtube.com/@TechCrunch',
     subscriberCount: '2.8M',
-    lastVideo: 'AI Revolution: What\'s Next in 2025',
+    lastVideo: 'AI Revolution: What&apos;s Next in 2025',
     lastVideoDate: '3 hours ago',
     lastCheck: '2 minutes ago',
     status: 'active',
@@ -299,7 +299,7 @@ const ChannelsPage = () => {
                             DELETE CHANNEL?
                           </AlertDialogTitle>
                           <AlertDialogDescription className="font-bold">
-                            Are you sure you want to delete "{channel.name}"? This action cannot be undone. 
+                            Are you sure you want to delete &quot;{channel.name}&quot;? This action cannot be undone. 
                             All processed videos and summaries will be permanently removed.
                           </AlertDialogDescription>
                         </AlertDialogHeader>

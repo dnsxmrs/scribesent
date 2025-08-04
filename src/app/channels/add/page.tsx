@@ -16,10 +16,7 @@ import {
 } from '@/components/ui/select';
 
 import { 
-  Youtube, 
-  Loader2,
-  Users,
-  Calendar
+  Loader2
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -64,6 +61,7 @@ const AddChannelPage = () => {
       // Mock success
       router.push('/channels?added=true');
     } catch (error) {
+      console.log('Error adding channel:', error);
       alert('Failed to add channel. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -218,8 +216,8 @@ const AddChannelPage = () => {
                 <p className="font-bold text-black">How to find a YouTube channel URL:</p>
                 <ol className="list-decimal list-inside space-y-1 text-sm text-gray-700 font-bold ml-4">
                   <li>Go to the YouTube channel you want to track</li>
-                  <li>Copy the URL from your browser's address bar</li>
-                  <li>Paste it into the field above and click "Validate"</li>
+                  <li>Copy the URL from your browser&apos;s address bar</li>
+                  <li>Paste it into the field above and click &quot;Validate&quot;</li>
                 </ol>
               </div>
               <div>

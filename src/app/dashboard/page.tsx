@@ -5,13 +5,11 @@ import DashboardLayout from '@/components/dashboard-layout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { 
   Youtube, 
   Mail, 
   Clock, 
-  BarChart3, 
   Users, 
   PlayCircle,
   ExternalLink,
@@ -34,7 +32,7 @@ const mockChannels = [
     name: 'TechCrunch',
     channelUrl: 'https://youtube.com/@TechCrunch',
     subscriberCount: '2.8M',
-    lastVideo: 'AI Revolution: What\'s Next in 2025',
+    lastVideo: 'AI Revolution: What&apos;s Next in 2025',
     lastVideoDate: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
     status: 'active',
     summaryFormat: 'Standard'
@@ -64,7 +62,7 @@ const mockChannels = [
 const mockRecentSummaries = [
   {
     id: '1',
-    videoTitle: 'AI Revolution: What\'s Next in 2025',
+    videoTitle: 'AI Revolution: What&apos;s Next in 2025',
     channelName: 'TechCrunch',
     summary: 'This video discusses the rapid advancement of AI technology in 2025, covering breakthrough developments in LLMs, robotics, and autonomous systems. Key highlights include new GPT models, improved reasoning capabilities, and integration into everyday applications.',
     emailSent: true,

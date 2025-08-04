@@ -1,11 +1,9 @@
 "use client"
 
-import { Github, Heart, FileText, Shield } from "lucide-react"
+import { Github, Heart } from "lucide-react"
 import Link from "next/link"
 
-import { Button } from "@/components/ui/button"
 import { Logo } from "@/components/logo"
-import { resourceLimits } from "worker_threads"
 
 const footerLinks = {
   legal: [

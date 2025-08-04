@@ -57,23 +57,23 @@ const EditChannelPage = () => {
     isActive: true
   });
 
-  // Mock data for specific channel
-  const mockChannelData: ChannelData = {
-    id: channelId,
-    name: 'TechCrunch',
-    channelUrl: 'https://youtube.com/@TechCrunch',
-    subscriberCount: '2.8M',
-    description: 'TechCrunch is a leading technology media property, dedicated to obsessively profiling startups.',
-    latestVideo: 'AI Revolution: What\'s Next in 2025',
-    videoCount: '12,450',
-    status: 'active',
-    summaryFormat: 'standard',
-    emailAddress: 'john.doe@gmail.com',
-    videosProcessed: 45,
-    dateAdded: '2025-01-15'
-  };
-
   useEffect(() => {
+    // Mock data for specific channel
+    const mockChannelData: ChannelData = {
+      id: channelId,
+      name: 'TechCrunch',
+      channelUrl: 'https://youtube.com/@TechCrunch',
+      subscriberCount: '2.8M',
+      description: 'TechCrunch is a leading technology media property, dedicated to obsessively profiling startups.',
+      latestVideo: 'AI Revolution: What&apos;s Next in 2025',
+      videoCount: '12,450',
+      status: 'active',
+      summaryFormat: 'standard',
+      emailAddress: 'john.doe@gmail.com',
+      videosProcessed: 45,
+      dateAdded: '2025-01-15'
+    };
+
     // Simulate API call to fetch channel data
     const fetchChannelData = async () => {
       setIsLoading(true);
@@ -118,6 +118,7 @@ const EditChannelPage = () => {
       // Mock success
       router.push('/channels?updated=true');
     } catch (error) {
+        console.log('Error updating channel:', error);
       alert('Failed to update channel. Please try again.');
     } finally {
       setIsSubmitting(false);
