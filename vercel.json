@@ -1,0 +1,21 @@
+{
+  "env": {
+    "NEXTAUTH_URL": "https://scribesent.vercel.app",
+    "NEXTAUTH_SECRET": "@nextauth-secret",
+    "AUTH_GOOGLE_ID": "dummy-google-client-id-for-development",
+    "AUTH_GOOGLE_SECRET": "dummy-google-client-secret-for-development"
+  },
+  "build": {
+    "env": {
+      "NEXTAUTH_URL": "https://scribesent.vercel.app",
+      "NEXTAUTH_SECRET": "@nextauth-secret",
+      "AUTH_GOOGLE_ID": "dummy-google-client-id-for-development",
+      "AUTH_GOOGLE_SECRET": "dummy-google-client-secret-for-development"
+    }
+  },
+  "functions": {
+    "app/api/auth/[...nextauth]/route.ts": {
+      "maxDuration": 30
+    }
+  }
+}

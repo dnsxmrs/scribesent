@@ -265,7 +265,14 @@ Scribesent uses a **Neo-Brutalism** design approach with components from [neobru
 ### Vercel (Recommended)
 
 1. **Connect your repository to Vercel**
-2. **Configure environment variables** in Vercel dashboard
+2. **Configure environment variables** in Vercel dashboard:
+   - `NEXTAUTH_URL`: `https://your-app-name.vercel.app`
+   - `NEXTAUTH_SECRET`: Generate a secure random string
+   - `AUTH_GOOGLE_ID`: `dummy-google-client-id-for-development` (for demo/dev-bypass)
+   - `AUTH_GOOGLE_SECRET`: `dummy-google-client-secret-for-development` (for demo/dev-bypass)
+   
+   **Note**: The dummy Google credentials enable the dev-bypass authentication for demo purposes. For production with real Google OAuth, replace with actual Google OAuth credentials.
+
 3. **Deploy** - Vercel will automatically build and deploy
 
 ### Docker (Alternative)
