@@ -15,6 +15,7 @@ const footerLinks = {
   resources: [
     { name: "Blog", href: "/blog" },
     { name: "FAQ", href: "/faq" },
+    { name: "Repository", href: "https://github.com/dnsxmrs/scribesent" },
   ],
   social: [
     { name: "GitHub", href: "https://github.com/scribesent/scribesent", icon: Github },
@@ -35,10 +36,7 @@ export function Footer() {
               Never miss important content from your favorite creators.
             </p>
 
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <FileText className="h-4 w-4" />
-              <span>Open source under MIT License</span>
-            </div>
+
           </div>
           
           {/* Quick Links */}

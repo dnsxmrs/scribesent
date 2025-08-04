@@ -1,6 +1,11 @@
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
-import { ChevronDown, ChevronRight } from "lucide-react"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 export default function FAQPage() {
   return (
@@ -27,41 +32,32 @@ export default function FAQPage() {
                 Getting Started
               </h2>
               
-              <div className="space-y-6">
-                <div className="bg-card border-2 border-border rounded-base shadow-neo p-6">
-                  <h3 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-                    <ChevronRight className="h-5 w-5 text-main" />
-                    What is ScribeSent?
-                  </h3>
-                  <p className="text-muted-foreground">
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="what-is-scribesent">
+                  <AccordionTrigger>What is ScribeSent?</AccordionTrigger>
+                  <AccordionContent>
                     ScribeSent is an AI-powered service that monitors your favorite YouTube channels and delivers 
                     concise, intelligent summaries of new videos directly to your email inbox. Never miss 
                     important content from creators you follow.
-                  </p>
-                </div>
+                  </AccordionContent>
+                </AccordionItem>
 
-                <div className="bg-card border-2 border-border rounded-base shadow-neo p-6">
-                  <h3 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-                    <ChevronRight className="h-5 w-5 text-main" />
-                    How do I get started?
-                  </h3>
-                  <p className="text-muted-foreground">
+                <AccordionItem value="how-to-get-started">
+                  <AccordionTrigger>How do I get started?</AccordionTrigger>
+                  <AccordionContent>
                     Simply sign up with your Google account, add the YouTube channels you want to monitor, 
                     set your summary preferences, and we&apos;ll handle the rest. You&apos;ll start receiving 
                     email summaries within 24 hours of new video uploads.
-                  </p>
-                </div>
+                  </AccordionContent>
+                </AccordionItem>
 
-                <div className="bg-card border-2 border-border rounded-base shadow-neo p-6">
-                  <h3 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-                    <ChevronRight className="h-5 w-5 text-main" />
-                    Is ScribeSent free to use?
-                  </h3>
-                  <p className="text-muted-foreground">
+                <AccordionItem value="is-free">
+                  <AccordionTrigger>Is ScribeSent free to use?</AccordionTrigger>
+                  <AccordionContent>
                     Yes! ScribeSent is completely free for all users. There are no pricing tiers, subscriptions, or premium plans—everyone can enjoy the full set of features at no cost.
-                  </p>
-                </div>
-              </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </section>
 
             {/* How It Works */}
@@ -70,55 +66,43 @@ export default function FAQPage() {
                 How It Works
               </h2>
               
-              <div className="space-y-6">
-                <div className="bg-card border-2 border-border rounded-base shadow-neo p-6">
-                  <h3 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-                    <ChevronRight className="h-5 w-5 text-main" />
-                    How accurate are the AI summaries?
-                  </h3>
-                  <p className="text-muted-foreground">
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="ai-accuracy">
+                  <AccordionTrigger>How accurate are the AI summaries?</AccordionTrigger>
+                  <AccordionContent>
                     Our AI uses advanced language models to create highly accurate summaries that capture 
                     the key points, main arguments, and important details from each video. The summaries 
                     are designed to give you the essential information without losing context.
-                  </p>
-                </div>
+                  </AccordionContent>
+                </AccordionItem>
 
-                <div className="bg-card border-2 border-border rounded-base shadow-neo p-6">
-                  <h3 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-                    <ChevronRight className="h-5 w-5 text-main" />
-                    What types of videos work best with ScribeSent?
-                  </h3>
-                  <p className="text-muted-foreground">
+                <AccordionItem value="video-types">
+                  <AccordionTrigger>What types of videos work best with ScribeSent?</AccordionTrigger>
+                  <AccordionContent>
                     ScribeSent works excellently with educational content, tutorials, news updates, tech reviews, 
                     and informational videos. While it can summarize entertainment content, it&apos;s most valuable 
                     for content where you need to quickly understand key insights and information.
-                  </p>
-                </div>
+                  </AccordionContent>
+                </AccordionItem>
 
-                <div className="bg-card border-2 border-border rounded-base shadow-neo p-6">
-                  <h3 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-                    <ChevronRight className="h-5 w-5 text-main" />
-                    How quickly are summaries delivered?
-                  </h3>
-                  <p className="text-muted-foreground">
+                <AccordionItem value="delivery-speed">
+                  <AccordionTrigger>How quickly are summaries delivered?</AccordionTrigger>
+                  <AccordionContent>
                     Summaries are typically generated and sent within 1-4 hours of a new video being uploaded. 
                     Processing time depends on video length and current system load. You can also choose to 
                     receive daily digest emails instead of individual summaries.
-                  </p>
-                </div>
+                  </AccordionContent>
+                </AccordionItem>
 
-                <div className="bg-card border-2 border-border rounded-base shadow-neo p-6">
-                  <h3 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-                    <ChevronRight className="h-5 w-5 text-main" />
-                    Can I customize the summary format?
-                  </h3>
-                  <p className="text-muted-foreground">
+                <AccordionItem value="customize-format">
+                  <AccordionTrigger>Can I customize the summary format?</AccordionTrigger>
+                  <AccordionContent>
                     Yes! You can choose between different summary lengths (brief, standard, detailed) and 
                     formats (bullet points, paragraphs, or structured sections). Premium users also get access 
                     to custom templates and advanced formatting options.
-                  </p>
-                </div>
-              </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </section>
 
             {/* Account & Settings */}
@@ -127,43 +111,34 @@ export default function FAQPage() {
                 Account & Settings
               </h2>
               
-              <div className="space-y-6">
-                <div className="bg-card border-2 border-border rounded-base shadow-neo p-6">
-                  <h3 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-                    <ChevronRight className="h-5 w-5 text-main" />
-                    How do I add or remove YouTube channels?
-                  </h3>
-                  <p className="text-muted-foreground">
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="add-remove-channels">
+                  <AccordionTrigger>How do I add or remove YouTube channels?</AccordionTrigger>
+                  <AccordionContent>
                     In your dashboard, simply paste the YouTube channel URL or search for the channel name. 
                     To remove channels, go to your subscription list and click the remove button next to any channel. 
                     Changes take effect immediately.
-                  </p>
-                </div>
+                  </AccordionContent>
+                </AccordionItem>
 
-                <div className="bg-card border-2 border-border rounded-base shadow-neo p-6">
-                  <h3 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-                    <ChevronRight className="h-5 w-5 text-main" />
-                    Can I pause summaries temporarily?
-                  </h3>
-                  <p className="text-muted-foreground">
+                <AccordionItem value="pause-summaries">
+                  <AccordionTrigger>Can I pause summaries temporarily?</AccordionTrigger>
+                  <AccordionContent>
                     Absolutely! You can pause summaries for individual channels or your entire account. 
                     This is perfect for vacations or busy periods when you don&apos;t want to receive emails. 
                     Resume anytime from your account settings.
-                  </p>
-                </div>
+                  </AccordionContent>
+                </AccordionItem>
 
-                <div className="bg-card border-2 border-border rounded-base shadow-neo p-6">
-                  <h3 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-                    <ChevronRight className="h-5 w-5 text-main" />
-                    What email address will summaries come from?
-                  </h3>
-                  <p className="text-muted-foreground">
+                <AccordionItem value="email-address">
+                  <AccordionTrigger>What email address will summaries come from?</AccordionTrigger>
+                  <AccordionContent>
                     All summary emails are sent from summaries@scribesent.com. Make sure to add this address 
                     to your safe sender list to ensure delivery. We recommend creating a dedicated folder 
                     for ScribeSent emails to keep them organized.
-                  </p>
-                </div>
-              </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </section>
 
             {/* Privacy & Security */}
@@ -172,43 +147,34 @@ export default function FAQPage() {
                 Privacy & Security
               </h2>
               
-              <div className="space-y-6">
-                <div className="bg-card border-2 border-border rounded-base shadow-neo p-6">
-                  <h3 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-                    <ChevronRight className="h-5 w-5 text-main" />
-                    What data does ScribeSent collect?
-                  </h3>
-                  <p className="text-muted-foreground">
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="data-collection">
+                  <AccordionTrigger>What data does ScribeSent collect?</AccordionTrigger>
+                  <AccordionContent>
                     We follow a privacy-first approach and only collect the minimum data necessary: your email address, 
                     the YouTube channels you want to monitor, and your summary preferences. We never store video content 
                     or personal viewing history. Read our Privacy Policy for complete details.
-                  </p>
-                </div>
+                  </AccordionContent>
+                </AccordionItem>
 
-                <div className="bg-card border-2 border-border rounded-base shadow-neo p-6">
-                  <h3 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-                    <ChevronRight className="h-5 w-5 text-main" />
-                    Is my account secure?
-                  </h3>
-                  <p className="text-muted-foreground">
+                <AccordionItem value="account-security">
+                  <AccordionTrigger>Is my account secure?</AccordionTrigger>
+                  <AccordionContent>
                     Yes! We use Google OAuth for authentication, which means we never store your password. 
                     All data is encrypted in transit and at rest. We also implement industry-standard 
                     security practices and regularly audit our systems.
-                  </p>
-                </div>
+                  </AccordionContent>
+                </AccordionItem>
 
-                <div className="bg-card border-2 border-border rounded-base shadow-neo p-6">
-                  <h3 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-                    <ChevronRight className="h-5 w-5 text-main" />
-                    Can I delete my account and data?
-                  </h3>
-                  <p className="text-muted-foreground">
+                <AccordionItem value="delete-account">
+                  <AccordionTrigger>Can I delete my account and data?</AccordionTrigger>
+                  <AccordionContent>
                     Absolutely. You can delete your account at any time from your account settings. 
                     This will permanently remove all your data, subscriptions, and preferences. 
                     The deletion is immediate and irreversible.
-                  </p>
-                </div>
-              </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </section>
 
             {/* Technical Support */}
@@ -217,42 +183,33 @@ export default function FAQPage() {
                 Technical Support
               </h2>
               
-              <div className="space-y-6">
-                <div className="bg-card border-2 border-border rounded-base shadow-neo p-6">
-                  <h3 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-                    <ChevronRight className="h-5 w-5 text-main" />
-                    I&apos;m not receiving email summaries. What should I do?
-                  </h3>
-                  <p className="text-muted-foreground">
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="email-issues">
+                  <AccordionTrigger>I&apos;m not receiving email summaries. What should I do?</AccordionTrigger>
+                  <AccordionContent>
                     First, check your spam/junk folder and add summaries@scribesent.com to your safe sender list. 
                     If you&apos;re still not receiving emails, verify that your monitored channels have uploaded 
                     new content recently. Contact support if the issue persists.
-                  </p>
-                </div>
+                  </AccordionContent>
+                </AccordionItem>
 
-                <div className="bg-card border-2 border-border rounded-base shadow-neo p-6">
-                  <h3 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-                    <ChevronRight className="h-5 w-5 text-main" />
-                    What browsers are supported?
-                  </h3>
-                  <p className="text-muted-foreground">
+                <AccordionItem value="browser-support">
+                  <AccordionTrigger>What browsers are supported?</AccordionTrigger>
+                  <AccordionContent>
                     ScribeSent works on all modern browsers including Chrome, Firefox, Safari, and Edge. 
                     We recommend using the latest version of your preferred browser for the best experience. 
                     The interface is fully responsive and works on mobile devices too.
-                  </p>
-                </div>
+                  </AccordionContent>
+                </AccordionItem>
 
-                <div className="bg-card border-2 border-border rounded-base shadow-neo p-6">
-                  <h3 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-                    <ChevronRight className="h-5 w-5 text-main" />
-                    How do I contact support?
-                  </h3>
-                  <p className="text-muted-foreground">
+                <AccordionItem value="contact-support">
+                  <AccordionTrigger>How do I contact support?</AccordionTrigger>
+                  <AccordionContent>
                     You can reach our support team at support@scribesent.com. We typically respond within 24 hours. 
                     For faster assistance, check this FAQ first as it covers the most common questions and issues.
-                  </p>
-                </div>
-              </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </section>
 
             {/* Call to Action */}

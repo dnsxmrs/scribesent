@@ -96,7 +96,7 @@ export function Navbar() {
             ))}
             
             {/* GitHub Link */}
-            <Link href="https://github.com/scribesent/scribesent" target="_blank">
+            <Link href="https://github.com/dnsxmrs/scribesent" target="_blank">
               <Button 
                 variant="outline" 
                 size="sm" 
@@ -207,7 +207,7 @@ export function Navbar() {
                 )
               ))}
               
-              <Link href="https://github.com/scribesent/scribesent" target="_blank">
+              <Link href="https://github.com/dnsxmrs/scribesent" target="_blank">
                 <Button 
                   variant="outline" 
                   className={cn(

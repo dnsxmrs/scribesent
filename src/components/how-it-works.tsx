@@ -5,10 +5,6 @@ import {
   Monitor, 
   Bot, 
   Mail,
-  ArrowRight,
-  Youtube,
-  Brain,
-  Inbox,
   Zap,
   Eye,
   Settings

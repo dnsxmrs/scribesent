@@ -1,34 +1,50 @@
 import NextAuth from "next-auth"
+import Google from "next-auth/providers/google"
 import Credentials from "next-auth/providers/credentials"
 
-// Mock Google OAuth provider for development
-const MockGoogleProvider = Credentials({
-  id: "google",
-  name: "Google",
-  credentials: {},
-  async authorize() {
-    // Return mock Google user data
-    return {
-      id: "google-user-123",
-      name: "Demo User",
-      email: "demo@gmail.com",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
-    }
-  }
-})
-
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [MockGoogleProvider],
+  providers: [
+    // Development mode credentials provider for bypassing Google OAuth
+    Credentials({
+      id: "dev-bypass",
+      name: "Development Mode",
+      credentials: {},
+      async authorize() {
+        // Only allow in development with dummy credentials
+        if (process.env.AUTH_GOOGLE_ID === "dummy-google-client-id-for-development") {
+          return {
+            id: "dev-user-123",
+            name: "Development User",
+            email: "dev@example.com",
+            image: "https://via.placeholder.com/40"
+          }
+        }
+        return null
+      },
+    }),
+    Google({
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+    }),
+  ],
   pages: {
     signIn: '/login',
   },
   callbacks: {
-    async redirect({ url, baseUrl }) {
-      // Allows relative callback URLs
-      if (url.startsWith("/")) return `${baseUrl}${url}`
-      // Allows callback URLs on the same origin
-      else if (new URL(url).origin === baseUrl) return url
-      return baseUrl
+    async session({ session, token }) {
+      return session
     },
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id
+      }
+      return token
+    },
+    async redirect({ url, baseUrl }) {
+      // Redirect to dashboard after successful authentication
+      if (url.startsWith("/")) return `${baseUrl}${url}`
+      else if (new URL(url).origin === baseUrl) return url
+      return `${baseUrl}/dashboard`
+    }
   },
 })

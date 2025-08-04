@@ -4,7 +4,6 @@ import { ArrowRight, Play } from "lucide-react"
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
 
 export function HeroSection() {
   return (
@@ -24,16 +23,16 @@ export function HeroSection() {
       </div>
       
       {/* Content */}
-      <div className="container relative mx-auto px-4">
+      <div className="container relative mx-auto px-4 z-10">
         <div className="flex flex-col items-center text-center">
           <div className="max-w-4xl">
             {/* Main Headline */}
-            <h1 className="text-4xl font-bold text-main-foreground sm:text-5xl lg:text-6xl xl:text-7xl leading-tight mb-6">
-              Never miss a YouTube video again
+            <h1 className="text-4xl font-bold text-main-foreground sm:text-5xl lg:text-6xl xl:text-7xl leading-relaxed mb-6 tracking-normal">
+              Never miss a <span className="text-white px-3 py-2 mx-1">YouTube</span> video again
             </h1>
             
             {/* Subheading */}
-            <p className="text-xl text-main-foreground/90 sm:text-2xl lg:text-3xl leading-relaxed mb-12 max-w-3xl mx-auto">
+            <p className="text-xl text-main-foreground/90 sm:text-2xl lg:text-3xl leading-relaxed mb-12 max-w-3xl mx-auto tracking-wide">
               Get AI-powered summaries delivered straight to your inbox.
             </p>
             
@@ -50,14 +49,14 @@ export function HeroSection() {
                 </Button>
               </Link>
               
-              <Link href="#how-it-works">
+              <Link href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
                 <Button 
                   size="lg" 
                   variant="ghost"
                   className="text-main-foreground border-2 border-main-foreground/30 hover:border-main-foreground hover:bg-main-foreground/10 gap-3"
                 >
                   <Play className="h-5 w-5" />
-                  See How It Works
+                  See Demo
                 </Button>
               </Link>
             </div>
@@ -81,10 +80,10 @@ export function HeroSection() {
         </div>
       </div>
       
-      {/* Decorative Elements */}
-      <div className="absolute top-10 left-10 h-20 w-20 border-4 border-main-foreground/20 rounded-base transform rotate-12 hidden lg:block"></div>
-      <div className="absolute bottom-10 right-10 h-16 w-16 border-4 border-main-foreground/20 rounded-base transform -rotate-12 hidden lg:block"></div>
-      <div className="absolute top-1/2 left-20 h-12 w-12 border-4 border-main-foreground/20 rounded-base transform rotate-45 hidden xl:block"></div>
+      {/* Decorative Elements - positioned to avoid content overlap */}
+      <div className="absolute top-10 left-10 h-20 w-20 border-4 border-main-foreground/20 rounded-base transform rotate-12 hidden lg:block z-0"></div>
+      <div className="absolute bottom-10 right-10 h-16 w-16 border-4 border-main-foreground/20 rounded-base transform -rotate-12 hidden lg:block z-0"></div>
+      <div className="absolute top-1/2 left-20 h-12 w-12 border-4 border-main-foreground/20 rounded-base transform rotate-45 hidden xl:block z-0"></div>
     </section>
   )
 }

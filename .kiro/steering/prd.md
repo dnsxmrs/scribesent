@@ -35,7 +35,7 @@ Scribesent is an open-source platform that automatically monitors YouTube channe
 - As a user, I can add YouTube channels by URL or channel name
 - As a user, I can configure summary preferences for each channel individually
 - As a user, I can set different email recipients for different channels
-- As a user, I can choose summary format and style per channel
+- As a user, I can choose summary format per channel
 - As a user, I can test the service on the latest video from a channel immediately after adding it
 - As a user, I can view and manage all tracked channels in a dashboard
 - As a user, I can edit channel preferences after initial setup
@@ -48,13 +48,13 @@ Scribesent is an open-source platform that automatically monitors YouTube channe
 **Content Processing**
 - As the system, I automatically detect new videos from tracked channels by polling their YouTube RSS feeds (https://www.youtube.com/feeds/videos.xml?channel_id=CHANNEL_ID)
 - As the system, I transcribe videos using youtube-transcript-api 
-- As the system, I generate summaries using Gemini API with customizable length and style
+- As the system, I generate summaries using Gemini API with customizable format
 - As the system, I handle videos in multiple languages with high transcription accuracy
 - As the system, I store full transcripts for user access and search for 30 days
 
 **Email Delivery & Notifications**
 - As a user, I receive email notifications with video summaries at my configured addresses
-- As a user, I can choose summary formats (bullet points, paragraph, key insights, executive summary)
+- As a user, I can choose summary formats (Standard/Detailed/Key Insights)
 - As a user, I can access full transcripts via web links in dashboard
 
 - **User Management & Settings**
@@ -127,8 +127,7 @@ NEO BRUTALISM BLUE WHITE COLOR PALLETE USING COMPONENTS FROM https://neobrutalis
   - YouTube channel URL input
   - Channel validation
   - Summary preferences configuration:
-    - Format: Standard/Detailed/Executive
-    - Style: Professional as default, Conversational, Academic
+    - Format: - Standard/Detailed/Key Insights
     - Email recipient input  (google email by default)
 
 - **Edit Channel** (`/channels/[id]/edit`)
@@ -163,7 +162,7 @@ flowchart TD
   E --> F[Validate channel via YouTube RSS feed]
   F --> G[User configures channel preferences]
     G --> G1[Choose summary format: Standard/Detailed/Executive]
-    G1 --> G2["Choose summary style: Professional (default)/Conversational/Academic/Bullet Points"]
+    G1 --> G2["Choose summary format: Standard/Detailed/Key Insights"]
     G2 --> G3[Choose email address for this channel]
     G3 --> H[Store channel + all preferences in PostgreSQL]
     H --> H1{User clicks 'Test Latest Video'?}
@@ -185,7 +184,7 @@ flowchart TD
   M -->|No| Q[Mark video as transcript unavailable]
   M -->|Yes| R[Store transcript in DB]
   R --> S[Retrieve channel-specific user preferences from DB]
-  S --> T[Send transcript to Gemini API with configured format & style]
+  S --> T[Send transcript to Gemini API with configured format]
   T --> U[Gemini generates summary per user's channel settings]
   U --> W[Send summary email automatically]
   W --> X[Format HTML email with summary]
@@ -209,4 +208,3 @@ flowchart TD
 **Transcription:** https://www.npmjs.com/package/youtube-transcript 
 **Monitoring:** Automated polling of YouTube RSS feeds every 5 minutes using Node.js (axios, xml2js, fs)  
 **Hosting:** Vercel (full-stack deployment)
-
